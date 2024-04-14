@@ -43,6 +43,6 @@ provider, err := goraxauth.AuthenticatedClient(opts)
 ```
 
 [go-gophercloud]: <https://pkg.go.dev/github.com/gophercloud/gophercloud>
-[gophercloud]: <(https://github.com/gophercloud/gophercloud)>
+[gophercloud]: <https://github.com/gophercloud/gophercloud>
 [raxident]: <https://docs.rackspace.com/docs/cloud-identity-v2-getting-started>
 [tokens2-authoptions]: <https://pkg.go.dev/github.com/gophercloud/gophercloud@v1.11.0/openstack/identity/v2/tokens#AuthOptions>
