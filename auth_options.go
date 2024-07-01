@@ -1,11 +1,12 @@
 package goraxauth
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack"
-	tokens2 "github.com/gophercloud/gophercloud/openstack/identity/v2/tokens"
+	"github.com/gophercloud/gophercloud/v2"
+	"github.com/gophercloud/gophercloud/v2/openstack"
+	tokens2 "github.com/gophercloud/gophercloud/v2/openstack/identity/v2/tokens"
 )
 
 type AuthOptions struct {
@@ -38,13 +39,13 @@ func (opts AuthOptions) CanReauth() bool {
 	return opts.AllowReauth
 }
 
-func AuthenticatedClient(options AuthOptions) (*gophercloud.ProviderClient, error) {
+func AuthenticatedClient(ctx context.Context, options AuthOptions) (*gophercloud.ProviderClient, error) {
 	client, err := openstack.NewClient(options.IdentityEndpoint)
 	if err != nil {
 		return nil, err
 	}
 
-	err = openstack.AuthenticateV2Ext(client, options, gophercloud.EndpointOpts{})
+	err = openstack.AuthenticateV2(ctx, client, options, gophercloud.EndpointOpts{})
 	if err != nil {
 		return nil, err
 	}

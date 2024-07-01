@@ -3,8 +3,8 @@ package goraxauth
 import (
 	"os"
 
-	"github.com/gophercloud/gophercloud"
-	tokens2 "github.com/gophercloud/gophercloud/openstack/identity/v2/tokens"
+	"github.com/gophercloud/gophercloud/v2"
+	tokens2 "github.com/gophercloud/gophercloud/v2/openstack/identity/v2/tokens"
 )
 
 var nilOptions = AuthOptions{}
