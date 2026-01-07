@@ -1,7 +1,5 @@
 module github.com/rackerlabs/goraxauth
 
-go 1.22
+go 1.24.0
 
-toolchain go1.22.3
-
-require github.com/gophercloud/gophercloud/v2 v2.0.0
+require github.com/gophercloud/gophercloud/v2 v2.10.0

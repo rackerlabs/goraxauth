@@ -14,25 +14,27 @@ type AuthOptions struct {
 	ApiKey string `json:"apiKey,omitempty"`
 }
 
-func (opts AuthOptions) ToTokenV2CreateMap() (map[string]interface{}, error) {
-	// if we have an ApiKey, use that otherwise just use the regular auth mechanism
+func (opts AuthOptions) ToTokenV2CreateMap() (map[string]any, error) {
 	if opts.ApiKey != "" {
 		if opts.Username == "" {
-			return nil, fmt.Errorf("username must be supplied for API key auth")
+			return nil, fmt.Errorf("username is required when using API key authentication")
 		}
-		return map[string]interface{}{
-			"auth": map[string]interface{}{
-				"RAX-KSKEY:apiKeyCredentials": map[string]interface{}{
+		return map[string]any{
+			"auth": map[string]any{
+				"RAX-KSKEY:apiKeyCredentials": map[string]any{
 					"username": opts.Username,
 					"apiKey":   opts.ApiKey,
 				},
 			},
 		}, nil
-	} else if (opts.Username != "" && opts.Password != "") || opts.TokenID != "" {
-		return opts.AuthOptions.ToTokenV2CreateMap()
-	} else {
-		return nil, fmt.Errorf("missing (Username and (Password or ApiKey)) or TokenId for auth")
 	}
+
+	// Fall back to embedded or standard AuthOptions if no API key is provided.
+	if (opts.Username != "" && opts.Password != "") || opts.TokenID != "" {
+		return opts.AuthOptions.ToTokenV2CreateMap()
+	}
+
+	return nil, fmt.Errorf("authentication requires either: (Username and (Password or ApiKey)) or TokenID")
 }
 
 func (opts AuthOptions) CanReauth() bool {
